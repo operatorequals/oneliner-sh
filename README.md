@@ -1,7 +1,8 @@
 # oneliner-sh
 
-oneliner is a tool that gives a list of compatible reverse-shell-string oneliners
+### oneliner is a tool that gives a list of compatible reverse-shell-string oneliners.
 
+````
 Usage:
  	in_shell.sh [-i IP] [-p PORT] [-A PLATFORM] [-s SHELL_TYPE] [-d DELIM] [-qfr] 
 
@@ -43,3 +44,4 @@ Usage:
  
  ============================================================================== 
  		***Happy Hunting*** 
+````
