@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 title="Inline Reverse Shells"
 description="Provides Greppable-Cuttable one liners with one keystroke!"
 version="0.1 alpha"
@@ -13,6 +13,11 @@ variabled=0
 readable=0
 del_s="#"
 
+
+inv_style="\e[7m"
+rst_style="\e[0m"
+b_u_style="\e[1;4m"
+yel_style="\e[33m"
 
 help_str="Usage:\n
 	\tin_shell.sh [-i IP] [-p PORT] [-A PLATFORM] [-s SHELL_TYPE] [-d DELIM] [-qfr] \n\n
@@ -133,7 +138,7 @@ if [ "$readable" = "1" ]; then
 		echo "================================================="
 		echo "$i.	$typ:"
 		echo
-		echo "$scr"
+		echo -e "$b_u_style$yel_style$scr$rst_style"
 		echo
 		echo "================================================="
 		i=$(expr $i + 1)
@@ -148,7 +153,7 @@ else
 		typ=$(echo $s_file | cut -d. -f1)
 
 		scr=$(echo $scr | sed -e "s#$ip_tok#$ip#g" -e "s#$port_tok#$port#g" -e "s#$shell_tok#$shell#g")
-		echo $i$del_s$shell_s$del_s$typ$del_s$scr
+		echo -e $i$del_s$shell_s$del_s$typ$del_s$yel_style$scr$rst_style$del_s
 
 		i=$(expr $i + 1)
 	done
